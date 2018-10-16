@@ -7,18 +7,18 @@ This is heavily inspired from [titpetric/docker-proxy-acl](https://github.com/ti
 This Docker image is only **6MB** and settings can be adjusted with the environment variable `OPTIONS`
 
 [![Build Status](https://travis-ci.org/qdm12/docker-proxy-acl.svg?branch=master)](https://travis-ci.org/qdm12/docker-proxy-acl)
-[![Docker Build Status](https://img.shields.io/docker/build/qmcgaw/docker-proxy-acl.svg)](https://hub.docker.com/r/qmcgaw/docker-proxy-acl)
+[![Docker Build Status](https://img.shields.io/docker/build/qmcgaw/docker-proxy-acl-alpine.svg)](https://hub.docker.com/r/qmcgaw/docker-proxy-acl-alpine)
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/qdm12/docker-proxy-acl.svg)](https://github.com/qdm12/docker-proxy-acl/commits)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/y/qdm12/docker-proxy-acl.svg)](https://github.com/qdm12/docker-proxy-acl/commits)
 [![GitHub issues](https://img.shields.io/github/issues/qdm12/docker-proxy-acl.svg)](https://github.com/qdm12/docker-proxy-acl/issues)
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/qmcgaw/docker-proxy-acl.svg)](https://hub.docker.com/r/qmcgaw/docker-proxy-acl)
-[![Docker Stars](https://img.shields.io/docker/stars/qmcgaw/docker-proxy-acl.svg)](https://hub.docker.com/r/qmcgaw/docker-proxy-acl)
-[![Docker Automated](https://img.shields.io/docker/automated/qmcgaw/docker-proxy-acl.svg)](https://hub.docker.com/r/qmcgaw/docker-proxy-acl)
+[![Docker Pulls](https://img.shields.io/docker/pulls/qmcgaw/docker-proxy-acl-alpine.svg)](https://hub.docker.com/r/qmcgaw/docker-proxy-acl-alpine)
+[![Docker Stars](https://img.shields.io/docker/stars/qmcgaw/docker-proxy-acl-alpine.svg)](https://hub.docker.com/r/qmcgaw/docker-proxy-acl-alpine)
+[![Docker Automated](https://img.shields.io/docker/automated/qmcgaw/docker-proxy-acl-alpine.svg)](https://hub.docker.com/r/qmcgaw/docker-proxy-acl-alpine)
 
-[![](https://images.microbadger.com/badges/image/qmcgaw/docker-proxy-acl.svg)](https://microbadger.com/images/qmcgaw/docker-proxy-acl)
-[![](https://images.microbadger.com/badges/version/qmcgaw/docker-proxy-acl.svg)](https://microbadger.com/images/qmcgaw/docker-proxy-acl)
+[![](https://images.microbadger.com/badges/image/qmcgaw/docker-proxy-acl-alpine.svg)](https://microbadger.com/images/qmcgaw/docker-proxy-acl-alpine)
+[![](https://images.microbadger.com/badges/version/qmcgaw/docker-proxy-acl-alpine.svg)](https://microbadger.com/images/qmcgaw/docker-proxy-acl-alpine)
 
 | Download size | Image size | RAM usage | CPU usage |
 | --- | --- | --- | --- |
@@ -55,7 +55,7 @@ In this case, run this container with:
 
 ```bash
 docker run -d -e OPTIONS="-a containers" -v /var/run/docker.sock:/var/run/docker.sock \
--v /yourpath:/tmp/docker-proxy-acl --net=none qmcgaw/docker-proxy-acl-alpine
+-v /yourpath:/tmp/docker-proxy-acl --net=none qmcgaw/docker-proxy-acl-alpine-alpine
 ```
 
 A new socket file is hence created at `/yourpath/docker.sock` with only the
