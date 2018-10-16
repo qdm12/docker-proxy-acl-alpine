@@ -1,0 +1,13 @@
+version: '3'
+services:
+  docker-proxy:
+    build: .
+    image: qmcgaw/docker-proxy-acl-alpine
+    container_name: docker-proxy
+    volumes:
+      - /tmp/docker-proxy-acl:/tmp/docker-proxy-acl
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - OPTIONS=-a containers
+    network_mode: none
+    restart: always
