@@ -58,11 +58,35 @@ docker run -d -e OPTIONS="-a containers" -v /var/run/docker.sock:/var/run/docker
 -v /yourpath:/tmp/docker-proxy-acl --net=none qmcgaw/docker-proxy-acl-alpine-alpine
 ```
 
+
+
 A new socket file is hence created at `/yourpath/docker.sock` with only the
 `/containers/json` and `/containers/{name}/json` endpoints allowed.
+
 
 This socket file can then be passed to the **netdata** container, with an additional option like this:
 
 ```bash
 -v /yourpath/docker.sock:/var/run/docker.sock
+```
+
+
+
+You can also use docker-compose:
+
+
+```yml
+version: '3'
+services:
+  docker-proxy:
+    build: .
+    image: qmcgaw/docker-proxy-acl-alpine
+    container_name: docker-proxy
+    volumes:
+      - /tmp/docker-proxy-acl:/tmp/docker-proxy-acl
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - OPTIONS=-a containers
+    network_mode: none
+    restart: always
 ```
