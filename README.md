@@ -6,12 +6,12 @@ This is heavily inspired from [titpetric/docker-proxy-acl](https://github.com/ti
 
 This Docker image is only **6MB** and settings can be adjusted with the environment variable `OPTIONS`
 
-[![Build Status](https://travis-ci.org/qdm12/docker-proxy-acl.svg?branch=master)](https://travis-ci.org/qdm12/docker-proxy-acl)
+[![Build Status](https://travis-ci.org/qdm12/docker-proxy-acl-alpine.svg?branch=master)](https://travis-ci.org/qdm12/docker-proxy-acl-alpine)
 [![Docker Build Status](https://img.shields.io/docker/build/qmcgaw/docker-proxy-acl-alpine.svg)](https://hub.docker.com/r/qmcgaw/docker-proxy-acl-alpine)
 
-[![GitHub last commit](https://img.shields.io/github/last-commit/qdm12/docker-proxy-acl.svg)](https://github.com/qdm12/docker-proxy-acl/commits)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/y/qdm12/docker-proxy-acl.svg)](https://github.com/qdm12/docker-proxy-acl/commits)
-[![GitHub issues](https://img.shields.io/github/issues/qdm12/docker-proxy-acl.svg)](https://github.com/qdm12/docker-proxy-acl/issues)
+[![GitHub last commit](https://img.shields.io/github/last-commit/qdm12/docker-proxy-acl-alpine.svg)](https://github.com/qdm12/docker-proxy-acl-alpine/commits)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/y/qdm12/docker-proxy-acl-alpine.svg)](https://github.com/qdm12/docker-proxy-acl-alpine/commits)
+[![GitHub issues](https://img.shields.io/github/issues/qdm12/docker-proxy-acl-alpine.svg)](https://github.com/qdm12/docker-proxy-acl-alpine/issues)
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/qmcgaw/docker-proxy-acl-alpine.svg)](https://hub.docker.com/r/qmcgaw/docker-proxy-acl-alpine)
 [![Docker Stars](https://img.shields.io/docker/stars/qmcgaw/docker-proxy-acl-alpine.svg)](https://hub.docker.com/r/qmcgaw/docker-proxy-acl-alpine)
@@ -22,7 +22,7 @@ This Docker image is only **6MB** and settings can be adjusted with the environm
 
 | Download size | Image size | RAM usage | CPU usage |
 | --- | --- | --- | --- |
-| ???MB | 6MB | ???MB | Low |
+| 5MB | 6MB | 10MB | Low |
 
 
 
@@ -55,7 +55,7 @@ In this case, run this container with:
 
 ```bash
 docker run -d -e OPTIONS="-a containers" -v /var/run/docker.sock:/var/run/docker.sock \
--v /yourpath:/tmp/docker-proxy-acl --net=none qmcgaw/docker-proxy-acl-alpine-alpine
+-v /yourpath:/tmp/docker-proxy-acl --net=none qmcgaw/docker-proxy-acl-alpine
 ```
 
 

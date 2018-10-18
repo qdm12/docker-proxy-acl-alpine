@@ -13,11 +13,11 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags="-s -w" -installsuffix cgo -o 
 FROM alpine:3.8
 LABEL maintainer="quentin.mcgaw@gmail.com" \
       description="Lightweight container running a restricted Docker unix socket proxy" \
-      download="???MB" \
+      download="5MB" \
       size="6MB" \
-      ram="???MB" \
+      ram="10MB" \
       cpu_usage="Very low to low" \
-      github="https://github.com/qdm12/docker-proxy-acl"
+      github="https://github.com/qdm12/docker-proxy-acl-alpine"
 ENV OPTIONS -a containers
 COPY --from=builder /go/src/app/proxy /proxy
 ENTRYPOINT /proxy "$OPTIONS"
