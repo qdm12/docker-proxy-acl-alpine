@@ -7,7 +7,6 @@ services:
     volumes:
       - /tmp/docker-proxy-acl:/tmp/docker-proxy-acl
       - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - OPTIONS=-a containers
+    command: -a containers
     network_mode: none
     restart: always
