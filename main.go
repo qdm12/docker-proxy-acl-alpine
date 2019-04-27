@@ -16,12 +16,12 @@ import (
 	"github.com/namsral/flag"
 )
 
-type UpStream struct {
-	Name   string
+type upStream struct {
+	name   string
 	handle *http.Client
 }
 
-func (r UpStream) Pass() func(res http.ResponseWriter, req *http.Request) {
+func (r upStream) pass() func(res http.ResponseWriter, req *http.Request) {
 	return func(res http.ResponseWriter, req *http.Request) {
 		if req.Method != "GET" {
 			http.Error(res, "400 Bad request ; only GET allowed.", 400)
@@ -31,12 +31,12 @@ func (r UpStream) Pass() func(res http.ResponseWriter, req *http.Request) {
 		if len(req.URL.RawQuery) > 0 {
 			param = "?" + req.URL.RawQuery
 		}
-		body, _ := r.Get("http://docker"+req.URL.Path+param, res)
+		body, _ := r.get("http://docker"+req.URL.Path+param, res)
 		fmt.Fprintf(res, "%s", body)
 	}
 }
 
-func (r UpStream) Get(url string, res http.ResponseWriter) ([]byte, error) {
+func (r upStream) get(url string, res http.ResponseWriter) ([]byte, error) {
 	req, err := r.handle.Get(url)
 	if err != nil {
 		return nil, err
@@ -49,8 +49,8 @@ func (r UpStream) Get(url string, res http.ResponseWriter) ([]byte, error) {
 	return ioutil.ReadAll(req.Body)
 }
 
-func newProxySocket(socket string) UpStream {
-	stream := UpStream{Name: socket}
+func newProxySocket(socket string) upStream {
+	stream := upStream{name: socket}
 	stream.handle = &http.Client{
 		Transport: &http.Transport{
 			Dial: func(proto, addr string) (net.Conn, error) {
@@ -91,8 +91,7 @@ func main() {
 	fs.Var(&allowed, "a", "Allowed location pattern prefix")
 	fs.Parse(os.Args[1:])
 	if len(allowed) < 1 {
-		log.Println(emoji.Sprint(":x:") + "Need at least 1 argument for -a: [" + strings.Join(allowedOptions, ",") + "]")
-		os.Exit(0)
+		log.Fatal(emoji.Sprint(":x:") + "Need at least 1 argument for -a: [" + strings.Join(allowedOptions, ",") + "]")
 	}
 	var ok bool
 	for i := range allowed {
@@ -104,8 +103,7 @@ func main() {
 			}
 		}
 		if !ok {
-			log.Println(emoji.Sprint(":x:") + "Argument " + allowed[i] + " not recognized!")
-			os.Exit(0)
+			log.Fatal(emoji.Sprint(":x:") + "Argument " + allowed[i] + " not recognized")
 		}
 	}
 	var routers [2]*mux.Router
@@ -118,55 +116,57 @@ func main() {
 			switch allowed[i] {
 			case "containers":
 				containers := m.PathPrefix("/containers").Subrouter()
-				containers.HandleFunc("/json", upstream.Pass())
-				containers.HandleFunc("/{name}/json", upstream.Pass())
+				containers.HandleFunc("/json", upstream.pass())
+				containers.HandleFunc("/{name}/json", upstream.pass())
 			case "images":
-				containers := m.PathPrefix("/images").Subrouter()
-				containers.HandleFunc("/json", upstream.Pass())
-				containers.HandleFunc("/{name}/json", upstream.Pass())
-				containers.HandleFunc("/{name}/history", upstream.Pass())
+				images := m.PathPrefix("/images").Subrouter()
+				images.HandleFunc("/json", upstream.pass())
+				images.HandleFunc("/{name}/json", upstream.pass())
+				images.HandleFunc("/{name}/history", upstream.pass())
 			case "volumes":
-				m.HandleFunc("/volumes", upstream.Pass())
-				m.HandleFunc("/volumes/{name}", upstream.Pass())
+				m.HandleFunc("/volumes", upstream.pass())
+				m.HandleFunc("/volumes/{name}", upstream.pass())
 			case "networks":
-				m.HandleFunc("/networks", upstream.Pass())
-				m.HandleFunc("/networks/{name}", upstream.Pass())
+				m.HandleFunc("/networks", upstream.pass())
+				m.HandleFunc("/networks/{name}", upstream.pass())
 			case "services":
-				m.HandleFunc("/services", upstream.Pass())
-				m.HandleFunc("/services/{name}", upstream.Pass())
+				m.HandleFunc("/services", upstream.pass())
+				m.HandleFunc("/services/{name}", upstream.pass())
 			case "tasks":
-				m.HandleFunc("/tasks", upstream.Pass())
-				m.HandleFunc("/tasks/{name}", upstream.Pass())
+				m.HandleFunc("/tasks", upstream.pass())
+				m.HandleFunc("/tasks/{name}", upstream.pass())
 			case "events":
-				m.HandleFunc("/events", upstream.Pass())
+				m.HandleFunc("/events", upstream.pass())
 			case "version":
-				m.HandleFunc("/version", upstream.Pass())
+				m.HandleFunc("/version", upstream.pass())
 			case "info":
-				m.HandleFunc("/info", upstream.Pass())
+				m.HandleFunc("/info", upstream.pass())
 			case "ping":
-				m.HandleFunc("/_ping", upstream.Pass())
+				m.HandleFunc("/_ping", upstream.pass())
 			}
 		}
 	}
 	http.Handle("/", routers[0])
 	listener, err := net.Listen("unix", *filename)
+	if err != nil {
+		log.Fatal(err)
+	}
 	os.Chmod(*filename, 0666)
 	// Looking up group ids coming up for Go 1.7
 	// https://github.com/golang/go/issues/2617
 	log.Println("Listening on " + *filename + emoji.Sprint(" :ear:"))
 	sigc := make(chan os.Signal, 1)
 	signal.Notify(sigc, os.Interrupt, os.Kill, syscall.SIGTERM)
-	go func(c chan os.Signal) {
-		sig := <-c
-		log.Println(emoji.Sprint(":heavy_exclamation_mark:")+"Caught signal %s, shutting down", sig)
-		listener.Close()
-		os.Exit(0)
-	}(sigc)
-	if err != nil {
-		panic(err)
-	}
+	go waitForSignal(sigc, listener)
 	err = http.Serve(listener, nil)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
+}
+
+func waitForSignal(c chan os.Signal, listener net.Listener) {
+	sig := <-c
+	log.Println(emoji.Sprint(":heavy_exclamation_mark:") + "Caught signal '" + sig.String() + "', shutting down")
+	listener.Close()
+	os.Exit(0)
 }

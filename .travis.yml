@@ -4,4 +4,4 @@ services:
 install:
   - docker build .
 after_script:
-  #- "curl -X POST https://hooks.microbadger.com/images/qmcgaw/docker-proxy-acl/???"
+  - "curl -X POST https://hooks.microbadger.com/images/qmcgaw/docker-proxy-acl-alpine/LjSz_drSWg23rkYgs4SL7WeaV_o="

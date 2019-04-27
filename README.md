@@ -18,7 +18,7 @@
 
 | Image size | RAM usage | CPU usage |
 | --- | --- | --- |
-| 5.28MB | 10MB | Low |
+| 5.82MB | 10MB | Low |
 
 ## Why
 
@@ -88,5 +88,5 @@ services:
 
 - [ ] Change to another router
 - [ ] Healthcheck
+- [ ] Non root user
 - [ ] Title icon
-- [ ] [group ids coming up for Go 1.7](https://github.com/golang/go/issues/2617)
