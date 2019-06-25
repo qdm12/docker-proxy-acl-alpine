@@ -2,7 +2,6 @@
 
 *Lightweight container running a restricted Docker unix socket proxy*
 
-[![Build Status](https://travis-ci.org/qdm12/docker-proxy-acl-alpine.svg?branch=master)](https://travis-ci.org/qdm12/docker-proxy-acl-alpine)
 [![Docker Build Status](https://img.shields.io/docker/build/qmcgaw/docker-proxy-acl-alpine.svg)](https://hub.docker.com/r/qmcgaw/docker-proxy-acl-alpine)
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/qdm12/docker-proxy-acl-alpine.svg)](https://github.com/qdm12/docker-proxy-acl-alpine/commits)
