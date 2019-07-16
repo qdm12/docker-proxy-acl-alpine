@@ -74,7 +74,7 @@ func (s *stringSlice) Set(value string) error {
 	return nil
 }
 
-var allowedOptions = []string{"containers", "images", "volumes", "services", "tasks", "events", "version", "info", "ping"}
+var allowedOptions = []string{"containers", "images", "networks", "volumes", "services", "tasks", "events", "info",  "version", "ping"}
 
 func main() {
 	fmt.Println("############################################")
