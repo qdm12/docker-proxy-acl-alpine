@@ -74,7 +74,40 @@ func (s *stringSlice) Set(value string) error {
 	return nil
 }
 
-var allowedOptions = []string{"containers", "images", "networks", "volumes", "services", "tasks", "events", "info",  "version", "ping"}
+var allowedOptions = []string{
+	"containers", "images", "networks", "volumes", 
+	"services", "tasks", "events", "info",  "version", 
+	"ping", "events", "auth", "secrets", "build", "commit",
+	"configs", "distribution", "exec", "nodes", "plugins", 
+	"session", "swarm", "system",
+}
+
+case "events":
+	m.HandleFunc("/events", upstream.pass())
+case "auth":
+	m.HandleFunc("/auth", upstream.pass())
+case "secrets":
+	m.HandleFunc("/secrets", upstream.pass())
+case "build":
+	m.HandleFunc("/build", upstream.pass())
+case "commit":
+	m.HandleFunc("/commit", upstream.pass())
+case "configs":
+	m.HandleFunc("/configs", upstream.pass())
+case "distribution":
+	m.HandleFunc("/distribution", upstream.pass())
+case "exec":
+	m.HandleFunc("/exec", upstream.pass())
+case "nodes":
+	m.HandleFunc("/nodes", upstream.pass())
+case "plugins":
+	m.HandleFunc("/plugins", upstream.pass())
+case "session":
+	m.HandleFunc("/session", upstream.pass())
+case "swarm":
+	m.HandleFunc("/swarm", upstream.pass())
+case "system":
+	m.HandleFunc("/system", upstream.pass())
 
 func main() {
 	fmt.Println("############################################")
@@ -143,6 +176,32 @@ func main() {
 				m.HandleFunc("/info", upstream.pass())
 			case "ping":
 				m.HandleFunc("/_ping", upstream.pass())
+			case "events":
+				m.HandleFunc("/events", upstream.pass())
+			case "auth":
+				m.HandleFunc("/auth", upstream.pass())
+			case "secrets":
+				m.HandleFunc("/secrets", upstream.pass())
+			case "build":
+				m.HandleFunc("/build", upstream.pass())
+			case "commit":
+				m.HandleFunc("/commit", upstream.pass())
+			case "configs":
+				m.HandleFunc("/configs", upstream.pass())
+			case "distribution":
+				m.HandleFunc("/distribution", upstream.pass())
+			case "exec":
+				m.HandleFunc("/exec", upstream.pass())
+			case "nodes":
+				m.HandleFunc("/nodes", upstream.pass())
+			case "plugins":
+				m.HandleFunc("/plugins", upstream.pass())
+			case "session":
+				m.HandleFunc("/session", upstream.pass())
+			case "swarm":
+				m.HandleFunc("/swarm", upstream.pass())
+			case "system":
+				m.HandleFunc("/system", upstream.pass())
 			}
 		}
 	}

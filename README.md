@@ -26,6 +26,8 @@
   - Options can be changed with the command line argument
   - Emojis
   - More checks
+- No need to run with `--privileged` although you bind mount the docker socket
+- No networking, just unix socket files
 
 Exposing `/var/run/docker.sock` to a Docker container requiring it (such as [netdata](https://github.com/firehol/netdata)) involves
 security concerns and the container should be limited in what it can do with `docker.sock`.
@@ -42,6 +44,20 @@ You can enable an endpoint with the `-a` argument. Currently supported endpoints
 - info: opens access to `/info`
 - version: opens access to `/version`
 - ping: opens access to `/_ping`
+- Untested endpoints:
+    - events
+    - auth
+    - secrets
+    - build
+    - commit
+    - configs
+    - distribution
+    - exec
+    - nodes
+    - plugins
+    - session
+    - swarm
+    - system
 
 To combine arguments, repeat them like this: `-a info -a version`
 
